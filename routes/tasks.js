@@ -3,6 +3,7 @@ module.exports = app => {
 
 
         app.route("/tasks")
+              .all(app.auth.authenticate())
               .get((req,res)=>{
                 Tasks.findAll({}).
                 then( (results)=>{
@@ -19,7 +20,8 @@ module.exports = app => {
                     .catch(error=>{
                         res.status(412).json({message:error})
                     });
-            });
+            })
+
 
 
 
