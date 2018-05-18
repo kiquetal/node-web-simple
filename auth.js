@@ -28,13 +28,20 @@ module.exports=app => {
   });
   passport.use(strategy);
   return {
-      initialize: ()=>{
+      initialize: () => {
           return passport.initialize();
       },
-      authenticate:()=>{
-          return passport.authenticate("jwt",cfg.jwtSession);
+      authenticate: (req,res,next) => {
+          //     return passport.authenticate("jwt",cfg.jwtSession),function(req,res){console.log(req.user.id);res.json({"algo":"ok"});}
+
+          passport.authenticate('jwt', {session: false}, function(err, user, info) {
+              if (err) console.log("que paso");// next(err);
+              if (user)
+              next();
+              else
+                  res.status(403).json({"message":"no authorizado"});
+          })(req, res, next);
       }
   }
-
 
 };

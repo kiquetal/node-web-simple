@@ -18,10 +18,14 @@ import jwt from "jwt-simple";
                                          token: jwt.encode(payload, cfg.jwtSecret)
                                    });
                                  } else {
+                                   console.log("error aqui");
                                    res.sendStatus(401);
                                  }
                            })
-                       .catch(error => res.sendStatus(401));
+                       .catch(error => {
+                            console.log("error aqui catch");
+                           res.sendStatus(401)
+                       });
                    } else {
                      res.sendStatus(401);
                    }

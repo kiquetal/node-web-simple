@@ -3,7 +3,10 @@ module.exports = app => {
 
 
         app.route("/tasks")
-              .all(app.auth.authenticate())
+              .all((req,res,next)=>
+              {
+                  return app.auth.authenticate(req,res,next);
+              })
               .get((req,res)=>{
                 Tasks.findAll({}).
                 then( (results)=>{
